@@ -4,3 +4,4 @@ django-admin-interface
 django-crispy-forms
 mercadopago
 djangorestframework
+django-admin-interface
