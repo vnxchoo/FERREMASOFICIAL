@@ -40,7 +40,7 @@ def agregar_producto(request):
         formulario = ProductoForm(data=request.POST, files=request.FILES)
         if formulario.is_valid():
             formulario.save()  # ¡No olvides los paréntesis para llamar a la función save!
-            data["mensaje"] = "Guardado Correctamente"
+            messages.success(request, "Guardado correctamente")
         else:
             data['form'] = formulario
     return render(request, 'app/producto/agregar.html', data)
@@ -80,7 +80,7 @@ def modificar_producto(request,id):
 def eliminar_producto(request, id):
     producto = get_object_or_404(Producto, id=id)
     producto.delete()
-    messages.success(request, "ELiminado correctamente")
+    messages.success(request, "Eliminado correctamente")
     return redirect(to="listar_producto")
 
 def registro(request):
