@@ -29,23 +29,28 @@
 
 </script>
 {% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'app/css/estilohome.css' %}">
+    <link rel="stylesheet" href="{% static 'app/css/estilos.css' %}">
+{% endblock %}
 
 {% block contenido %}
-{% for p in productos %}
-{% load humanize %}
-<div class="productos">
-    <div class="producto">
-        <div class="contenedor">
-            {% if p.imagen %}
-            <img src="{{ p.imagen.url }}" alt="imagen producto">
-            {% endif %}
-            <a href="{% url 'Add' p.id %}" class="btn btn-primary">Agregar al carrito</a>
-        <div class="detalles">
-            <h5>{{ p.marca | capfirst }}</h5>
-            <h2>{{ p.nombre | title }}</h2>
-            <h3>${{ p.precio | intcomma }}</h3>
+    {% for p in productos %}
+    {% load humanize %}
+        <div class="productos">
+            <div class="producto">
+                <div class="contenedor">
+                    {% if p.imagen %}
+                        <img src="{{ p.imagen.url }}" alt="imagen producto">
+                    {% endif %}
+                    <a href="{% url 'Add' p.id %}" class="btn btn-primary">Agregar al carrito</a>
+                    <div class="detalles">
+                        <h5>{{ p.marca | capfirst }}</h5>
+                        <h2>{{ p.nombre | title }}</h2>
+                        <h3>${{ p.precio | intcomma }}</h3>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-{% endfor %}
+    {% endfor %}
 {% endblock %}

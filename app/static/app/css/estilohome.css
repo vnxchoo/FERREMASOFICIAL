@@ -1,0 +1,73 @@
+.productos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-around; /* Ajusta el espaciado horizontal */
+}
+
+.producto {
+    width: calc(25% - 20px); /* Calcula el ancho de cada producto */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.producto:hover {
+    transform: translateY(-5px); /* Efecto de elevación al pasar el ratón */
+}
+
+.producto img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 1px solid #ddd; /* Línea divisoria opcional */
+}
+
+.producto .detalles {
+    padding: 15px;
+}
+
+.producto h5 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.producto h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.producto h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2B6CB0;
+}
+
+.btn-agregar {
+    display: none; /* Oculta el botón de agregar por defecto */
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@media (max-width: 1200px) {
+    .producto {
+        width: calc(33.33% - 20px); /* Ajusta el ancho en pantallas grandes */
+    }
+}
+
+@media (max-width: 992px) {
+    .producto {
+        width: calc(50% - 20px); /* Ajusta el ancho en tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .producto {
+        width: calc(100% - 20px); /* Ajusta el ancho en dispositivos móviles */
+    }
+}
