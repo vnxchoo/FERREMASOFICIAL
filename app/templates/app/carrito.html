@@ -1,47 +1,97 @@
-{%extends 'app/base.html'%}
+{% extends 'app/base.html' %}
+
 {% block contenido %}
 <div class="alert alert-primary" role="alert">
     <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th scope="row" colspan="3" class="text-center">CARRITO</th>
-        </tr>
-        <tr>
-          <th scope="col">NOMBRE</th>
-          <th scope="col">PRECIO</th>
-          <th scope="col">CANTIDAD</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% if request.session.carrito.items %}
-      {% for key, value in request.session.carrito.items %}
-        <tr>
-          <td>{{value.nombre}}</td>
-          <td>{{ value.precio }}</td>
-          <td>{{ value.acumulado }}</td>
-            <a href="{% url 'Add' value.producto_id %}" class="badge btn btn-dark badge-dark">+</a>
-            <a href="{% url 'Sub' value.producto_id %}" class="badge btn btn-dark badge-dark">-</a>
-          </td>
-        </tr>
-      {% endfor %}
-      {% else %}
-      <tr>
-          <td colspan="3">
-              <div class="alert alert-danger text-center"> Sin Productos </div>
-          </td>
-      </tr>
-      {% endif %}
-        <tr>
-          <th scope="row">Total:</th>
-          <td colspan="2">$ {{total_carrito}}</td>
-        </tr>
-      </tbody>
+        <thead>
+            <tr>
+                <th scope="row" colspan="4" class="text-center">CARRITO</th>
+            </tr>
+            <tr>
+                <th scope="col">NOMBRE</th>
+                <th scope="col">PRECIO UNITARIO</th>
+                <th scope="col">CANTIDAD</th>
+                <th scope="col">PRECIO TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if carrito %}
+            {% for key, value in carrito.items %}
+            <tr>
+                <td>{{ value.nombre }}</td>
+                <td>{{ value.precio_unitario }}</td>
+                <td>{{ value.cantidad }}</td>
+                <td>{{ value.acumulado }}</td>
+                <td>
+                    <a href="{% url 'Add' value.producto_id %}" class="badge btn btn-dark badge-dark">+</a>
+                    <a href="{% url 'Sub' value.producto_id %}" class="badge btn btn-dark badge-dark">-</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="5">
+                    <div class="alert alert-danger text-center">Sin Productos</div>
+                </td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th scope="row">Total:</th>
+                <td colspan="4">$ {{ total_carrito }}</td>
+            </tr>
+        </tbody>
     </table>
     <hr>
+</div>
+<div class="row text-center">
+    <div class="col-6">
+        <a href="{% url 'CLS' %}" class="btn btn-danger">Limpiar</a>
     </div>
-    <div class="row text-center">
-        <div class="col-6"><a href="{% url 'CLS' %}" class="btn btn-danger">Limpiar</a></div>
-        <div class="col-6"><a href="#" class="btn btn-success">Guardar</a></div>
+    <div class="col-6">
+        <div id="paypal-button"></div>
     </div>
+</div>
 
-{%endblock%}
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+  paypal.Button.render({
+    // Configure environment
+    env: 'sandbox', // Usando sandbox para pruebas
+    client: {
+      sandbox: 'ATYMIqr3rrfabMWuKYk0VBRMwYSPAD0iY4b7QPQRFC2qr-Q588X2Y9-uSLJQjyPopetIQA0lYdoa496k', // Tu Client ID de sandbox
+      production: '' // Deja esto vacío o coloca tu Client ID de producción aquí cuando estés listo
+    },
+    // Customize button (optional)
+    locale: 'es_CL',
+    style: {
+      size: 'large',
+      color: 'gold',
+      shape: 'pill',
+    },
+
+    // Enable Pay Now checkout flow (optional)
+    commit: true,
+
+    // Set up a payment
+    payment: function(data, actions) {
+      return actions.payment.create({
+        transactions: [{
+          amount: {
+            total: '{{ total_carrito }}', // Usa el total del carrito calculado
+            currency: 'USD'
+          }
+        }]
+      });
+    },
+    // Execute the payment
+    onAuthorize: function(data, actions) {
+      return actions.payment.execute().then(function() {
+        // Show a confirmation message to the buyer
+        window.alert('Gracias por tu compra!');
+      });
+    }
+  }, '#paypal-button');
+
+</script>
+
+{% endblock %}

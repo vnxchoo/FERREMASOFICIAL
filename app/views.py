@@ -121,7 +121,14 @@ def limpiar_carrito(request):
     carrito.limpiar()
     return redirect("carrito")
 def carrito(request):
-    return render(request, 'app/carrito.html')
+    carrito = request.session.get('carrito', {})
+    total_carrito = 0
+    for key, value in carrito.items():
+        value['precio_unitario'] = value['acumulado'] / value['cantidad']
+        total_carrito += value['acumulado']
+    return render(request, 'app/carrito.html', {'carrito': carrito, 'total_carrito': total_carrito})
+
+
 
 class ProductoListCreate(generics.ListCreateAPIView):
     queryset = Producto.objects.all()
