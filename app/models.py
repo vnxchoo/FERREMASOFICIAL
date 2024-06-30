@@ -45,4 +45,14 @@ class Contacto(models.Model):
 
     def __str__(self):
         return self.nombre
+    
+class Transferencia(models.Model):
+    nombre = models.CharField(max_length=50)
+    rut = models.CharField(max_length=20, default='1')
+    correo = models.EmailField()
+    CodigoP = models.CharField(max_length=50, db_column='Codigo Producto') 
+    imagen = models.ImageField(upload_to="productos", null=True)    
+
+    def __str__(self):
+        return self.nombre
 

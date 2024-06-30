@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contacto, Producto
+from .models import Contacto, Producto, Transferencia
 from django.contrib.auth.forms import UserCreationForm
 
 class ContactoForm(forms.ModelForm):
@@ -14,6 +14,12 @@ class ProductoForm(forms.ModelForm):
         widgets = {
             "fecha": forms.SelectDateWidget()
         }
+
+class TransForm(forms.ModelForm):  
+    class Meta:
+        model = Transferencia
+        fields = '__all__'
+
 
 class CustomUserCreationForm(UserCreationForm):
     pass      

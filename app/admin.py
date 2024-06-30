@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Marca, Producto, Categoria, Contacto
+from .models import Marca, Producto, Categoria, Contacto, Transferencia
 
 class ProductoAdmin(admin.ModelAdmin):
     list_display=("nombre","marca","precio","nuevo",)
@@ -10,3 +10,4 @@ admin.site.register(Marca)
 admin.site.register(Categoria)
 admin.site.register(Producto, ProductoAdmin)
 admin.site.register(Contacto)
+admin.site.register(Transferencia)

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from .models import Producto
-from .forms import ContactoForm, ProductoForm, CustomUserCreationForm
+from .forms import ContactoForm, ProductoForm, CustomUserCreationForm, TransForm
 from rest_framework import generics
 from .serializers import ProductoSerializer
 
@@ -28,9 +28,24 @@ def contacto(request):
         formulario = ContactoForm(data= request.POST)
         if formulario.is_valid():
             formulario.save()
-            data["mensaje"]= "mensaje guardado"
+            messages.success(request, "Mensaje enviado")
     return render(request, 'app/contacto.html', data)
 
+def transferencia(request):
+    data = {
+        'form': TransForm()  # Instancia del formulario
+    }
+
+    if request.method == 'POST':
+        formulario = TransForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Transferencia Enviada")
+            return redirect('carrito')  # Redirigir a alguna URL después de guardar
+        else:
+            data['form'] = formulario  # Pasar el formulario con errores de vuelta al contexto
+
+    return render(request, 'app/transferencia/transferencia.html', data)
 def galeria(request):
     return render(request, 'app/galeria.html')
 
