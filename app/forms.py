@@ -15,10 +15,12 @@ class ProductoForm(forms.ModelForm):
             "fecha": forms.SelectDateWidget()
         }
 
-class TransForm(forms.ModelForm):  
+
+
+class TransForm(forms.ModelForm):
     class Meta:
         model = Transferencia
-        fields = '__all__'
+        fields = ['nombre', 'rut', 'correo', 'CodigoP', 'imagen']  # Incluye el campo imagen
 
 
 class CustomUserCreationForm(UserCreationForm):

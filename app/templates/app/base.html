@@ -44,6 +44,11 @@
                     <a href="{% url 'listar_producto'%}">Listado Producto</a>
                 </li>
                 {% endif %}
+                {% if perms.app.view_transferencia %}
+                <li>
+                    <a href="{% url 'lista_transferencias'%}">Lista Transferencias</a>
+                </li>
+                {% endif %}
                 <li>
                     {% if user.is_authenticated %}
                     <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">

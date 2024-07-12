@@ -1,0 +1,18 @@
+{% extends 'app/base.html' %}
+{% block contenido %}
+
+<div class="container">
+    <h2>Lista de Transferencias</h2>
+    {% if transferencias %}
+        <ul>
+            {% for transferencia in transferencias %}
+                <li>{{ transferencia.nombre }}</li>
+                <!-- Puedes mostrar otros campos de la transferencia aquí -->
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay transferencias disponibles.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

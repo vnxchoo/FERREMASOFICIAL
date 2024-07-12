@@ -4,29 +4,29 @@
 {% block js %}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-    const productos = document.querySelectorAll('.producto');
+        const productos = document.querySelectorAll('.producto');
 
-    productos.forEach(producto => {
-        producto.addEventListener('mouseenter', function() {
-            const btnAgregar = this.querySelector('.btn-agregar');
-            btnAgregar.style.display = 'inline-block';
-        });
+        productos.forEach(producto => {
+            producto.addEventListener('mouseenter', function() {
+                const btnAgregar = this.querySelector('.btn-agregar');
+                btnAgregar.style.display = 'inline-block';
+            });
 
-        producto.addEventListener('mouseleave', function() {
-            const btnAgregar = this.querySelector('.btn-agregar');
-            btnAgregar.style.display = 'none';
-        });
+            producto.addEventListener('mouseleave', function() {
+                const btnAgregar = this.querySelector('.btn-agregar');
+                btnAgregar.style.display = 'none';
+            });
 
-        const btnAgregar = producto.querySelector('.btn-agregar');
-        const productoId = btnAgregar.getAttribute('data-producto-id');
+            const btnAgregar = producto.querySelector('.btn-agregar');
+            const productoId = btnAgregar.getAttribute('data-producto-id');
 
-        btnAgregar.addEventListener('click', function() {
-            agregarAlCarrito(productoId);
+            btnAgregar.addEventListener('click', function() {
+                agregarAlCarrito(productoId);
+            });
         });
     });
-});
 
-
+  
 </script>
 {% endblock %}
 {% block css %}
@@ -35,15 +35,15 @@
 {% endblock %}
 
 {% block contenido %}
-    {% for p in productos %}
-    {% load humanize %}
-        <div class="productos">
+    <div class="productos">
+        {% for p in productos %}
+        {% load humanize %}
             <div class="producto">
                 <div class="contenedor">
                     {% if p.imagen %}
                         <img src="{{ p.imagen.url }}" alt="imagen producto">
                     {% endif %}
-                    <a href="{% url 'Add' p.id %}" class="btn btn-primary">Agregar al carrito</a>
+                    <a href="{% url 'Add' p.id %}" class="btn btn-primary btn-agregar" data-producto-id="{{ p.id }}">Agregar al carrito</a>
                     <div class="detalles">
                         <h5>{{ p.marca | capfirst }}</h5>
                         <h2>{{ p.nombre | title }}</h2>
@@ -51,6 +51,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 {% endblock %}

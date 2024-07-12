@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
-from .models import Producto
+from .models import Producto, Transferencia
 from .forms import ContactoForm, ProductoForm, CustomUserCreationForm, TransForm
 from rest_framework import generics
 from .serializers import ProductoSerializer
@@ -148,3 +148,12 @@ def carrito(request):
 class ProductoListCreate(generics.ListCreateAPIView):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
+
+def lista_transferencias(request):
+    transferencias = Transferencia.objects.all()
+
+    context = {
+        'transferencias': transferencias,
+    }
+
+    return render(request, 'app/transferencia/listaTransferencia.html', context)    
