@@ -61,17 +61,24 @@ def agregar_producto(request):
     return render(request, 'app/producto/agregar.html', data)
 
 def listar_producto(request):
-    productos = Producto.objects.all()
-    page = request.GET.get('page',1)
+    query = request.GET.get('query')
+    if query:
+        productos = Producto.objects.filter(nombre__icontains=query)
+    else:
+        productos = Producto.objects.all()
+
+    page = request.GET.get('page', 1)
 
     try:
         paginator = Paginator(productos, 5)
-        productos= paginator.page(page)
-    except : Http404
+        productos = paginator.page(page)
+    except:
+        raise Http404
 
     data = {
         'entity': productos,
-        'paginator': paginator
+        'paginator': paginator,
+        'query': query,
     }
     return render(request, 'app/producto/listar.html', data)
 

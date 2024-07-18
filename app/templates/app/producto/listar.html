@@ -6,6 +6,14 @@
 <div class="card">
     <div class="card-body">
         <h2>Listado de productos</h2>
+        
+        <form method="GET" action="{% url 'listar_producto' %}" class="form-inline mb-3">
+            <input type="text" name="query" class="form-control mr-sm-2" placeholder="Buscar producto..." value="{{ query }}">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+
+        <a href="{% url 'agregar_producto' %}" class="btn btn-success mb-3">Agregar Producto</a>
+
         <table class="table table-striped table-hover table-responsive-sm">
             <tr>
                 <th>Nombre</th>
@@ -27,7 +35,7 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a href="{%url 'modificar_producto' p.id %}" class="btn btn-info btn-sn">Modificar</a>
+                    <a href="{% url 'modificar_producto' p.id %}" class="btn btn-info btn-sn">Modificar</a>
                 </td>
                 <td>
                     <a href="{% url 'eliminar_producto' p.id %}" class="btn btn-danger btn-sn">Eliminar</a>
@@ -40,5 +48,4 @@
         </div>
     </div>
 </div>
-
 {% endblock %}
