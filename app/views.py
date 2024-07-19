@@ -81,7 +81,8 @@ def listar_producto(request):
         'query': query,
     }
     return render(request, 'app/producto/listar.html', data)
-
+def index(request):
+    return render(request, 'app/index.html')
 def modificar_producto(request,id):
     producto = get_object_or_404(Producto, id=id)
 
